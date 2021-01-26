@@ -1,0 +1,252 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- https://www.openliberty.io/guides/docker.html -> https://github.com/OpenLiberty/guide-docker -->
+    <!-- Liberty Maven Plug-in 3.0 - Changes from v2.x : https://github.com/OpenLiberty/ci.maven/releases/tag/liberty-maven-3.0 -->
+
+    <groupId>org.iisc.mile.ocr</groupId>
+    <artifactId>OCR_API</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+
+        <!-- OpenLiberty runtime -->
+        <!-- tag::appdetails[] -->
+        <app.name>${project.artifactId}</app.name>
+        <testServerHttpPort>9080</testServerHttpPort>
+        <testServerHttpsPort>9443</testServerHttpsPort>
+        <!-- end::appdetails[] -->
+        <warContext>${app.name}</warContext>
+        <package.file>${project.build.directory}/${app.name}.zip</package.file>
+        <packaging.type>usr</packaging.type>
+
+        <!-- Liberty configuration -->
+        <liberty.var.default.http.port>9080</liberty.var.default.http.port>
+        <liberty.var.default.https.port>9443</liberty.var.default.https.port>
+        <!-- liberty.var.app.context.root>${project.artifactId}</liberty.var.app.context.root -->
+        <liberty.runtime.version>20.0.0.12</liberty.runtime.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.openliberty.features</groupId>
+                <artifactId>features-bom</artifactId>
+                <version>${liberty.runtime.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Open Liberty features -->
+        <dependency>
+            <groupId>io.openliberty.features</groupId>
+            <artifactId>jaxrs-2.1</artifactId>
+            <type>esa</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.openliberty.features</groupId>
+            <artifactId>jsonp-1.1</artifactId>
+            <type>esa</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.iisc.mile.ocr</groupId>
+            <artifactId>OCR_Model</artifactId>
+            <version>1.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.openliberty.features</groupId>
+            <artifactId>mpOpenAPI-1.1</artifactId>
+            <type>esa</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.openliberty.features</groupId>
+            <artifactId>mpHealth-2.2</artifactId>
+            <type>esa</type>
+            <scope>provided</scope>
+        </dependency>
+        <!-- For tests -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-client</artifactId>
+            <version>3.2.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-rs-extension-providers</artifactId>
+            <version>3.2.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+            <version>1.0.4</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- For JDK 9 & 10 Support -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>2.3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.3</version>
+            </plugin>
+            <!-- Enable liberty-maven plugin -->
+            <plugin>
+                <groupId>io.openliberty.tools</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <serverXmlFile>src/main/liberty/config/server.xml</serverXmlFile>
+                    <packageFile>${package.file}</packageFile>
+                    <include>${packaging.type}</include>
+                    <bootstrapProperties>
+                        <default.http.port>${testServerHttpPort}</default.http.port>
+                        <default.https.port>${testServerHttpsPort}</default.https.port>
+                        <app.context.root>${warContext}</app.context.root>
+                    </bootstrapProperties>
+                </configuration>
+                <executions>
+                    <!-- Install the Open Liberty runtime and create defaultServer -->
+                    <execution>
+                        <id>create-server</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                    <!-- Install the needed Open Liberty features -->
+                    <execution>
+                        <id>install-feature</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>install-feature</goal>
+                        </goals>
+                    </execution>
+                    <!-- Install the app into the apps/ directory of defaultServer -->
+                    <execution>
+                        <id>install-app</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                        <configuration>
+                            <appsDirectory>apps</appsDirectory>
+                            <stripVersion>true</stripVersion>
+                            <deployPackages>project</deployPackages>
+                            <looseApplication>false</looseApplication>
+                        </configuration>
+                    </execution>
+                    <!-- Test start and stop server -->
+                    <execution>
+                        <id>start-server</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>test-start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-server</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>test-stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Plugin to run unit tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <id>default-test</id>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/it/**</exclude>
+                            </excludes>
+                            <reportsDirectory>${project.build.directory}/test-reports/unit</reportsDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Plugin to run functional tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.22.2</version>
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>**/it/**/*.java</include>
+                            </includes>
+                            <systemPropertyVariables>
+                                <liberty.test.port>${testServerHttpPort}</liberty.test.port>
+                                <war.name>${warContext}</war.name>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>verify-results</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <summaryFile>${project.build.directory}/test-reports/it/failsafe-summary.xml</summaryFile>
+                    <reportsDirectory>${project.build.directory}/test-reports/it</reportsDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
