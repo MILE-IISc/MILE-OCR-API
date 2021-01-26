@@ -1,0 +1,3 @@
+[submodule "ocr-model"]
+	path = ocr-model
+	url = https://github.com/MILE-IISc/ocr-model.git
