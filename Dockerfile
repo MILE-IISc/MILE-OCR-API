@@ -12,7 +12,7 @@ RUN cd /home/mile/api && mvn clean install
 FROM open-liberty:kernel-java8-openj9
 
 # Add my app and config
-COPY --chown=1001:0 --from=build /home/mile/api/target/liberty/wlp/usr/servers/defaultServer/apps/mile-iisc-ocr-api.war /config/apps/
+COPY --chown=1001:0 --from=build /home/mile/api/target/liberty/wlp/usr/servers/defaultServer/apps/MILE-OCR-API.war /config/apps/
 COPY --chown=1001:0 --from=build /home/mile/api/target/liberty/wlp/usr/servers/defaultServer/server.xml /config/server.xml
 COPY --chown=1001:0 --from=build /home/mile/api/target/liberty/wlp/usr/servers/defaultServer/bootstrap.properties /config/bootstrap.properties
 COPY --chown=1001:0 --from=build /home/mile/api/target/liberty/wlp/usr/servers/defaultServer/mpopenapi/customization.css /config/mpopenapi/customization.css
