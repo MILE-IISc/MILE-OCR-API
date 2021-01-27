@@ -13,13 +13,13 @@ import javax.xml.bind.Unmarshaller;
 
 import org.iisc.mile.ocr.model.OcrPage;
 
-public class BahuBhashakOcrEngineService {
+public class MileOcrEngineService {
 
-	private static BahuBhashakOcrEngineService uniqueInstance = null;
+	private static MileOcrEngineService uniqueInstance = null;
 
-	public static BahuBhashakOcrEngineService getInstance() {
+	public static MileOcrEngineService getInstance() {
 		if (uniqueInstance == null) {
-			uniqueInstance = new BahuBhashakOcrEngineService();
+			uniqueInstance = new MileOcrEngineService();
 		}
 		return uniqueInstance;
 	}
@@ -27,7 +27,7 @@ public class BahuBhashakOcrEngineService {
 	private Unmarshaller unmarshaller = null;
 	private Marshaller marshaller = null;
 
-	private BahuBhashakOcrEngineService() {
+	private MileOcrEngineService() {
 	}
 
 	void writeXML(OcrPage ocrPage, OutputStream os) throws JAXBException {

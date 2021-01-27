@@ -30,7 +30,7 @@ public class OpticalCharacterRecognitionResource {
 	public OcrPage runOCR(OcrPage ocrPage) throws IOException {
 		if (ocrPage.isSetImageData()) {
 			try {
-				return BahuBhashakOcrEngineService.getInstance().runOcr(ocrPage);
+				return MileOcrEngineService.getInstance().runOcr(ocrPage);
 			} catch (IOException | ClassNotFoundException | InterruptedException | JAXBException e) {
 				e.printStackTrace();
 			}
