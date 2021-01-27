@@ -1,8 +1,8 @@
 FROM maven:3.6.3-jdk-8-slim AS build
 
-COPY OCR_Model/src /home/OCR_Model/src
-COPY OCR_Model/pom.xml /home/OCR_Model
-RUN cd /home/OCR_Model && mvn clean install
+COPY ocr-model/src /home/ocr-model/src
+COPY ocr-model/pom.xml /home/ocr-model
+RUN cd /home/ocr-model && mvn clean install
 
 COPY src /home/api/src
 COPY pom.xml /home/api

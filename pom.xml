@@ -62,8 +62,8 @@
         </dependency>
         <dependency>
             <groupId>org.iisc.mile.ocr</groupId>
-            <artifactId>OCR_Model</artifactId>
-            <version>1.2-SNAPSHOT</version>
+            <artifactId>OCR-Model</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.openliberty.features</groupId>
