@@ -13,7 +13,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
 
+import org.iisc.mile.ocr.MileXmlToAltoXmlConverter;
 import org.iisc.mile.ocr.model.OcrPage;
+import org.iisc.mile.ocr.model.mets_alto.Alto;
 
 @Path("/")
 public class OpticalCharacterRecognitionResource {
@@ -36,6 +38,14 @@ public class OpticalCharacterRecognitionResource {
 			}
 		}
 		return null;
+	}
+
+	@Path("/convert")
+	@POST
+	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Alto convertToAltoXML(OcrPage ocrPage) throws IOException {
+		return MileXmlToAltoXmlConverter.createAltoXML(ocrPage);
 	}
 
 }
