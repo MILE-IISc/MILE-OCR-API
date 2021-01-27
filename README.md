@@ -1,5 +1,5 @@
-# ocr-api
-REST API for MILE IISc's OCR Engine
+# MILE-IISc OCR REST API
+Instructions to build and run MILE-IISc OCR REST API
 
 ## Load sub-modules
 ```
