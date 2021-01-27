@@ -1,3 +1,3 @@
-[submodule "ocr-model"]
-	path = ocr-model
-	url = https://github.com/MILE-IISc/ocr-model.git
+[submodule "MILE-OCR-Model"]
+	path = MILE-OCR-Model
+	url = https://github.com/MILE-IISc/MILE-OCR-Model.git
