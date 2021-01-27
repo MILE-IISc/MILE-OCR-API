@@ -1,34 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ocr-api
+  name: mile-ocr-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ocr-api
+      app: mile-ocr-api
   template:
     metadata:
       labels:
-        app: ocr-api
+        app: mile-ocr-api
     spec:
       containers:
-      - name: ocr-api
-        image: jp.icr.io/mile-iisc/ocr-api:v1.0.0
+      - name: mile-ocr-api
+        image: jp.icr.io/mile-iisc/mile-ocr-api:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
+      - name: mile-ocr-engine
+        image: jp.icr.io/mile-iisc/mile-ocr-engine:latest
+        imagePullPolicy: IfNotPresent
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ocr-api
+  name: mile-ocr-api
   labels:
-    app: ocr-api
+    app: mile-ocr-api
 spec:
   type: LoadBalancer
   ports:
     - port: 9080
       targetPort: 9080
   selector:
-    app: ocr-api
+    app: mile-ocr-api
