@@ -1,7 +1,7 @@
 **
 !Dockerfile
-!ocr-model/src
-!ocr-model/pom.xml
+!MILE-OCR-Model/src
+!MILE-OCR-Model/pom.xml
 !src
 !pom.xml
 !target/liberty/wlp/usr/servers/defaultServer/
