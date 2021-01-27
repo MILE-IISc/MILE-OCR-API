@@ -1,0 +1,12 @@
+.swagger-ui .headerbar {
+   padding: 8px 100px;
+   background-color: #eef3f8;
+}
+ .swagger-ui .headerbar .headerbar-wrapper {
+   background-repeat: no-repeat;
+   background-size: 98px 35px;
+   padding: 1px 30px 1px 130px;
+   display: flex;
+   align-items: center;
+   background-image: url(images/custom-logo.png);
+}

@@ -7,8 +7,8 @@
     <!-- Liberty Maven Plug-in 3.0 - Changes from v2.x : https://github.com/OpenLiberty/ci.maven/releases/tag/liberty-maven-3.0 -->
 
     <groupId>org.iisc.mile.ocr</groupId>
-    <artifactId>OCR_API</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>MILE-OCR-API</artifactId>
+    <version>1.0</version>
     <packaging>war</packaging>
 
     <properties>
@@ -62,8 +62,8 @@
         </dependency>
         <dependency>
             <groupId>org.iisc.mile.ocr</groupId>
-            <artifactId>OCR-Model</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>MILE-OCR-Model</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>io.openliberty.features</groupId>
