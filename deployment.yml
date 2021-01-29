@@ -19,7 +19,7 @@ spec:
         ports:
         - containerPort: 9080
       - name: mile-ocr-engine
-        image: jp.icr.io/mile-iisc/mile-ocr-engine:latest
+        image: jp.icr.io/mile-iisc/mile-ocr-engine-ubuntu1804:latest
         imagePullPolicy: IfNotPresent
 ---
 apiVersion: v1
