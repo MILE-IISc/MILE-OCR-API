@@ -36,21 +36,15 @@ $ docker images
 
 ## Run MILE-OCR-Engine and MILE-OCR-API containers in the same network namespace
 
-### Create common network
-```
-$ docker network create ocr-engine-nw
-$ docker network list
-```
-
-### Run MILE-OCR-Engine container
-```
-$ docker run -d --name ocr-engine --network ocr-engine-nw mile-ocr-engine
-```
-
 ### Run MILE-OCR-API container
 ```
-$ docker run -d --name ocr-api -p 9080:9080 -p 9443:9443 --network ocr-engine-nw mile-ocr-api
+$ docker run -d --name ocr-api -p 9080:9080 -p 9443:9443 mile-ocr-api
 $ docker ps
+```
+
+### Run MILE-OCR-Engine container in the same network namespace as MILE-OCR-API
+```
+$ docker run -d --name ocr-engine --network=container:ocr-api mile-ocr-engine
 ```
 
 ## Launch REST API Swagger UI
@@ -66,4 +60,3 @@ $ docker rm ocr-api
 
 ## References
 * [Sharing Network Namespaces in Docker](https://blog.mikesir87.io/2019/03/sharing-network-namespaces-in-docker/)
-* [Multi container apps](https://docs.docker.com/get-started/07_multi_container/)
