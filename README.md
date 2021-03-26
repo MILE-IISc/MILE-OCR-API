@@ -55,3 +55,7 @@ Open http://localhost:9080/openapi/ui/ in your browser
 $ docker stop ocr-api
 $ docker rm ocr-api
 ```
+
+## References
+* [Sharing Network Namespaces in Docker](https://blog.mikesir87.io/2019/03/sharing-network-namespaces-in-docker/)
+* [Multi container apps](https://docs.docker.com/get-started/07_multi_container/)
