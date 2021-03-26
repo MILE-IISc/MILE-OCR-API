@@ -4,6 +4,14 @@ MILE-OCR-API has runtime dependency on [MILE-OCR-Engine](https://github.com/MILE
 
 ## Build MILE-OCR-Engine and MILE-OCR-API Docker images
 
+### Install git lfs
+Some of the files in MILE-OCR-Engine are big and requires Git LFS to be [installed](https://github.com/git-lfs/git-lfs/wiki/Installation)
+```
+$ curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+$ sudo apt-get install git-lfs
+$ git lfs install
+```
+
 ### Clone the MILE-OCR-Engine repository and build its Docker image
 ```
 $ cd ..
