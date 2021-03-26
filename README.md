@@ -1,5 +1,4 @@
 # MILE-IISc OCR REST API
-Instructions to build and run MILE-IISc OCR REST API
 
 MILE-OCR-API has runtime dependency on [MILE-OCR-Engine](https://github.com/MILE-IISc/MILE-OCR-Engine.git) and compile-time dependency on [MILE-OCR-Model](https://github.com/MILE-IISc/MILE-OCR-Model.git). Hence it requires additional steps for build and deploy as shown below.
 
