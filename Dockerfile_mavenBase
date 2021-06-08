@@ -1,0 +1,10 @@
+FROM maven:3.8.1-jdk-11 
+
+COPY MILE-OCR-Model/src /home/mile/ocr-model/src
+COPY MILE-OCR-Model/pom.xml /home/mile/ocr-model
+RUN cd /home/mile/ocr-model && mvn clean install
+
+COPY src /home/mile/api/src
+COPY pom.xml /home/mile/api
+RUN cd /home/mile/api && mvn clean install
+
