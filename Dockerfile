@@ -1,4 +1,4 @@
-FROM maven:3.6.3-jdk-8-slim AS build
+FROM mileiisc/maven-with-openliberty-dependencies AS build
 
 COPY MILE-OCR-Model/src /home/mile/ocr-model/src
 COPY MILE-OCR-Model/pom.xml /home/mile/ocr-model
@@ -9,7 +9,7 @@ COPY pom.xml /home/mile/api
 RUN cd /home/mile/api && mvn clean install
 
 # https://docs.docker.com/samples/library/open-liberty/
-FROM open-liberty:kernel-java8-openj9
+FROM open-liberty:full-java11-openj9
 
 # Add my app and config
 COPY --chown=1001:0 --from=build /home/mile/api/target/liberty/wlp/usr/servers/defaultServer/apps/MILE-OCR-API.war /config/apps/
